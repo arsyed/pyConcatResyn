@@ -37,9 +37,9 @@ def rank_with_paired_nn(dicta, queries, model_path, model_opt_path):
         if t % 70 == 0 and t:
             sys.write('\n')
         qrep = repmat(queries[t, :], D, 1)
-        text_x = np.hstack([dicta, qrep])
-        test_x = mean_var_normalize_test(text_x, npz['train_mean'], npz['train_std'])
-        sim[:, t] = model_func(text_x)
+        test_x = np.hstack([dicta, qrep])
+        test_x = mean_var_normalize_test(test_x, npz['train_mean'], npz['train_std'])
+        sim[:, t] = model_func(test_x)
 
     best_chunks = np.argmax(sim, axis=0)
     return best_chunks
